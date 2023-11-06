@@ -9,13 +9,29 @@
   * 동적으로 할당된 데이터, 객체, 배열 및 함수와 같은 자료구조의 인스턴스를 저장하는것
   * 참조로 연결되어 있음
   * 힙에 저장된 데이터에 대한 참조가 stack 내에서 사용
-* nodejs 
-    * javascript engine(stack + heap) + webapis + callback queue + enent loop = nodejs = javascript runtime
-    * Stack -> WebAPIs -> callback queue -> event loop
-    * Stack: 코드의 실행이 주로 callStack 을 통해 시작, 함수 호출 및 실행은 여기서 관리
-    * Web Apis: 비동기작업을 여기서 처리, 작업이 완료되면 콜백 함수를 호출하거나 이벤트를 생성
-    * callback queue(task queue): 비동기 작업이 완료되면 콜백 함수가 callback queue or tackqueue에 추가. 여기에 대기중인 작업들이 들어옴
-    * event loop: call stack 과 callback queue 간의 상호작용을 관리
-      * 이벤트 루프가 주기적으로 call stack이 비어 있는지 확인하고 비어 있을때 callback queue에서 대기 중인 작업을 가져와 call stack으로 이동 -> 비동기 작업의 결과 또는 콜백함수가 실행
+
+* nodejs = js engine + LIBUV
+* javascript engine(stack + heap) + webapis + callback queue + enent loop
+  * Stack -> WebAPIs -> callback queue -> event loop
+  * Stack: 코드의 실행이 주로 callStack 을 통해 시작, 함수 호출 및 실행은 여기서 관리
+  * Web Apis: 비동기작업을 여기서 처리, 작업이 완료되면 콜백 함수를 호출하거나 이벤트를 생성
+  * callback queue(task queue): 비동기 작업이 완료되면 콜백 함수가 callback queue or tackqueue에 추가. 여기에 대기중인 작업들이 들어옴
+  * event loop: call stack 과 callback queue 간의 상호작용을 관리, 이벤트 루프는 연산을 다루지 않고 오직 완성된 콜백에 대한 모든 코드들을 처리
+    * 이벤트 루프가 주기적으로 call stack이 비어 있는지 확인하고 비어 있을때 callback queue에서 대기 중인 작업을 가져와 call stack으로 이동 -> 비동기 작업의 결과 또는 콜백함수가 실행
+
+* libuv: 비동기에 집중하는 멀티 플랫폼 라이브러리
+  * c언어로 개발
+  * thread pool이 존재하는데 이 스레드가 동기적인 입출력 작업을 이벤트 루프대신 처리
 * nodejs는 요청을 처리하는것이 매우 빠르고 배후에서는 운영체제의 영향력에 따라 약간의 다중 스레드를 사용한다? 이게 웹 api인가
+* 데이터 스트리밍: 데이터를 조각조각 처리하고 전송하는 프로세스
+  * 파일을 읽을때 그 파일의 크기만큼 메모리에 공간을 마련해두고 그 공간에 파일 데이터를 저장하는데 이거를 버퍼라고함
+  * 버커 크기가 너무 크기때문에 100mb 를 1mb로 100번 보내는 걸 스트림, 이때 나눠진 조각을 청크
+  * 간단한 요청의 경우에는 이과정이 필요 없지만 업로드 파일의 경우 상당히 오래걸리기 때문에 사용
+  * 파일 전체가 분석 완료되고 전부 업로드 되기 전까지 아무것도 안하면서 기다릴 필요가 없음
+  * 대량의 데이터를 처리하거나 네트워크를 통해 데이터를 효율적으로 전송해야 할때 유용하다
+  * 메모리 사용을 최소화 한다
+
+* nodejs 는 기다리거나 중지되지 않는 특성이 있다
+* nodejs는 논블로킹 방식 -> 수많은 콜백과 이벤트를 등록해두면 특정 작업이 끝난후에 nodejs가 해당 코드를 작동 시킨다는뜻
+* 어느경우에도 메인 스레드가 막히면 안될뿐더러 nodejs는 그런 문제를 피하도록 설계되어 있다
 * 
