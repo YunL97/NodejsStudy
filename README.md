@@ -113,7 +113,7 @@ app.use('/',(req, res, next) => {
   * 쿠키는 다른 페이지로 전달되 수 있으며 이는 실제 이미지가 없는 이미지 url인 페이지에 트래킹 픽셀이 있는 위치 추적에 흔히 활용되는 도구
   * 브라우저 js코드 내부에서는 쿠키를 읽을 수 없다
 
-* 세션
+# 세션
   *  서버에서 만든 세션을 브라우저 쿠키에 저장 -> 이 쿠키가 서버와 통신할때 인증역할을한다
   *  세션의 모든 정보를 메모리에 저장하면 메모리가 빠르게 오버플로우 된다 -> 바람직하지 않고 보안 측면에서도 이상적이지 않음 -> db에 저장하는게 좋음
   *  세션에는 장바구니등 어떤것도 저장가능, 특히 사용자인증에 흔히 사용된다  
@@ -134,3 +134,23 @@ app.use('/',(req, res, next) => {
 * 처리하고 메일서버를 만드는일은 보안등 여러 면에서 매우 복잡 -> 3자 메일서버 사용 ex) aws
 * crypto: 내장된 암호라이브러리
 * 비밀번호 재설정 같은 경우 이메일을 받을때 유효한 토큰이 포함된 이메일로만 비밀번호를 변경할 수 있도록 해야한다
+
+# 검증
+* post를 사용하는경우 검증이 필요
+*  express-validator 패키지를 이용해서 검증가능 )ex
+```
+reouter.post('/signup', check('email').isEmail().withMessage('please enter a valid email').custom((value, {req}) => {
+  if(value === 'test@test.com) {
+    throw new Error('asdasd');
+  }
+  return true;
+}),
+authcontroller.postSignup
+)
+
+----------------------------
+const { calidationresult } = require('express-validator/check')
+if(validationresult(req)) {
+  return validationResult(req).array(); // throw new Error('asdasd'); error이 validationResult 에 쌓인다
+}
+```
