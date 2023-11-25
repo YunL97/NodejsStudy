@@ -154,3 +154,7 @@ if(validationresult(req)) {
   return validationResult(req).array(); // throw new Error('asdasd'); error이 validationResult 에 쌓인다
 }
 ```
+* 사용자 입력값 살균: 문자열의 공백을 지우거나 소문자로 바꾸는것 
+* 살균은 유효성 검사와 함께하면 된다
+* 내장sanitizer을 사용하여 살균. experss-validator패키지안에 있음s
+* 
