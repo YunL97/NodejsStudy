@@ -162,4 +162,6 @@ if(validationresult(req)) {
 * 오류가 나타나게 되면 코드를 테스트해서 오류를 잡아낼 수 있는 특저 툴을 사용해서 오류를 처리
 * 동기식인경우  try catch 비동기식인경우 then 및 catch 블록 사용
 * 사용자에게 문제가 있음을 알리는 오류 페이지를 방환하는건 최후의 수단으로 사용해야한다
+* throw new Error('asd') -> express-validator 패키지의 throw new error 을 하면 express-validator 이 오류를 잡아주고 오류 배열에 추가해 잡아낸 오류 리스트를 보여주는것
+* 
 * 
