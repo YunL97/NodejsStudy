@@ -163,5 +163,18 @@ if(validationresult(req)) {
 * 동기식인경우  try catch 비동기식인경우 then 및 catch 블록 사용
 * 사용자에게 문제가 있음을 알리는 오류 페이지를 방환하는건 최후의 수단으로 사용해야한다
 * throw new Error('asd') -> express-validator 패키지의 throw new error 을 하면 express-validator 이 오류를 잡아주고 오류 배열에 추가해 잡아낸 오류 리스트를 보여주는것
-* 
-* 
+```
+.catch(err => {
+  const error = new Error(err)
+  error.httpStatusCode = 500
+ return next(error)// next로 호츨하는경우 (특정미들웨어에서 ex) admin.js)
+})
+ ------------------
+
+ app.js
+ app.use((error, req, res, next) => {
+  res.render('500')
+ }) //다른 모든 미들웨어를 건너뛰고 이 오류 처리 미들웨어로 곧바로 이동한다
+```
+* res.render은 템플릿엔진에서 사용하는거여서 굳이 안봐도 될듯 ?
+* promise, then catch 블록이나 callback 내부에서는 오류 주변의 next를 사용해야한다. 안그러면 무한루프 실행
