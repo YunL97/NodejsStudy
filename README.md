@@ -206,3 +206,12 @@ exports.getPosts = (req, res, next) => {
   })
 }
 ```
+* CORS: 교차 출처 리소스 공유 -> 기본적으로 브라우저에서는 허용 x -> 오직 서버에서만 해결 가능
+* 헤더에 몇가지 설정을 해줘야함
+```
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*') // * 표시하면 모든 클라이언트의 엑세스를 허용
+  res.setHeader('Access-Control-Allow-Method', 'GET, POST, PATCH, DELETE')
+   res.setHeader('Access-Control-Allow-Header', 'Content-Type', 'Authorization') // 이설정을 해줘야 클라이언트가 헤더에 추가 인증 데이터를 포함한 요청을 보낼 수 있음
+})
+```
