@@ -207,6 +207,7 @@ exports.getPosts = (req, res, next) => {
 }
 ```
 * CORS: 교차 출처 리소스 공유 -> 기본적으로 브라우저에서는 허용 x -> 오직 서버에서만 해결 가능
+* CORS 오류는 api와 클라이언트가 서로 다른 도메인에서 데이터를 주고 받으려 하는경우 발생한다
 * 헤더에 몇가지 설정을 해줘야함
 ```
 app.use((req, res, next) => {
@@ -215,3 +216,4 @@ app.use((req, res, next) => {
    res.setHeader('Access-Control-Allow-Header', 'Content-Type', 'Authorization') // 이설정을 해줘야 클라이언트가 헤더에 추가 인증 데이터를 포함한 요청을 보낼 수 있음
 })
 ```
+* 
