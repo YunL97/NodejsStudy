@@ -167,7 +167,7 @@ if(validationresult(req)) {
 .catch(err => {
   const error = new Error(err)
   error.httpStatusCode = 500
- return next(error)// next로 호츨하는경우 (특정미들웨어에서 ex) admin.js)
+ return next(error)// next로 호츨하는경우 (특정미들웨어에서 ex) admin.js) -> 비동기 코드 스니펫 내부에 있을때next 처리를 안해주면 다음 오류처리 미들웨어로 넘어갈 수 없기때문 -> app.js 맨아래 app.use(error, req) => {console.log(error)} 여기로 에러가 들어감
 })
  ------------------
 
@@ -216,4 +216,5 @@ app.use((req, res, next) => {
    res.setHeader('Access-Control-Allow-Header', 'Content-Type', 'Authorization') // 이설정을 해줘야 클라이언트가 헤더에 추가 인증 데이터를 포함한 요청을 보낼 수 있음
 })
 ```
+* 검증은 프론트엔드, 백엔드 둘다에서 하기
 * 
