@@ -278,3 +278,4 @@ app.use((req, res, next) => {
 * 현재의 js 는 9-10년 전의 js가 아님
 * nodejs 는 현대 js 구문 기능들을 지원
 * es모듈이란: es6 부터 도입된 모듈 시스템, export, import문을 사용해서 분리되어 있는 js 파일간의 접근을 가능하게 해준다
+
